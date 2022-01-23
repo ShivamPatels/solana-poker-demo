@@ -16,7 +16,7 @@ import {
 } from '@nfteyez/sol-rayz'
 import { clusterApiUrl } from '@solana/web3.js'
 import axios from 'axios'
-import * as _ from 'lodash';
+import * as _ from 'lodash'
 import { ProductCard } from './components/ProductCard'
 
 const MyWallet = () => {
@@ -62,6 +62,7 @@ const MyWallet = () => {
         let val = await axios.get(data[i].data.uri)
         arr.push(val?.data)
       }
+      console.log(arr)
       setProducts(arr)
       // return arr
     } catch (error) {
@@ -70,14 +71,18 @@ const MyWallet = () => {
   }
 
   useEffect(() => {
-    if (products?.length == 0 || !walletAddress) return;
+    if (products?.length == 0 || !walletAddress) return
     const filteredData = _.filter(products, (element) => {
-      return _.find(element?.properties?.creators, (obj) => {
-        return obj.address === walletAddress;
-      });
-    });
-    setFilteredproducts(filteredData);
-  }, [products, walletAddress]);
+      return (
+        element?.properties?.creators?.length === 2 &&
+        element?.properties?.creators[0]?.address ===
+          'GJLjwBv871zpPvGKxLmdWfajwRkBk6LehWgubHXR8dtc' &&
+        element?.properties?.creators[1]?.address ===
+          'F6xYGfaxRQ5oGcC5W6oyLBeg1boPQ4xHZnm9V7Mj58RA'
+      )
+    })
+    setFilteredproducts(filteredData)
+  }, [products, walletAddress])
 
   useEffect(() => {
     if (wallet.connected && wallet.publicKey) {
@@ -104,9 +109,9 @@ const MyWallet = () => {
       </div>
 
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-5 mt-4">
-          {filteredproducts.length > 0 &&
-            filteredproducts.map((element) => <ProductCard data={element} />)}
-        </div>
+        {filteredproducts.length > 0 &&
+          filteredproducts.map((element) => <ProductCard data={element} />)}
+      </div>
     </>
   )
 }
