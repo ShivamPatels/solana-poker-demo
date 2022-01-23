@@ -108,7 +108,7 @@ const MyWallet = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-5 mt-4">
+      <div className="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-1 lg:gap-10 gap-5 mt-4">
         {filteredproducts.length > 0 &&
           filteredproducts.map((element) => <ProductCard data={element} />)}
       </div>
